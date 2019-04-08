@@ -36,16 +36,14 @@ const findBestUnitValue = px => unit => {
   const { unitValue } = result;
 
   if (!Number.isInteger(unitValue)) {
-    let pixelOffset, newUnitValue, i = unitValue.toString().split('.')[1].length-1;
-    do {
-      newUnitValue = clampPrecision(unitValue, i);
+    for (let i = unitValue.toString().split('.')[1].length-1; i >= 0; i--) {
+      const newUnitValue = clampPrecision(unitValue, i);
       const newResult = getUnitValues(px, unit, newUnitValue);
-      pixelOffset = newResult.pixelOffset;
+      const pixelOffset = newResult.pixelOffset;
       if (Math.abs(pixelOffset) <= allowedPixelOffset) {
         result = newResult;
       }
-      i--;
-    } while (i >= 0);
+    }
   }
 
   return result;
