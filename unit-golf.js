@@ -39,7 +39,7 @@ const findBestUnitValue = px => unit => {
     for (let i = unitValue.toString().split('.')[1].length-1; i >= 0; i--) {
       const newUnitValue = clampPrecision(unitValue, i);
       const newResult = getUnitValues(px, unit, newUnitValue);
-      const pixelOffset = newResult.pixelOffset;
+      const { pixelOffset } = newResult;
       if (Math.abs(pixelOffset) <= allowedPixelOffset) {
         result = newResult;
       }
