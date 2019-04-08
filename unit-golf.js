@@ -14,7 +14,7 @@ const conversions = [
   { unit: "q",  value: 0.94453125 }
 ];
 
-const findShortestValue = px => {
+const convertAndSort = px => {
   return conversions
     .map(({ unit, value }) => {
       const inUnits = (px / value).toPrecision(2);
@@ -30,7 +30,7 @@ const findShortestValue = px => {
     })
 };
 
-const [best, ...rest] = findShortestValue(px);
+const [best, ...rest] = convertAndSort(px);
 
 console.log(`\nBest: ${best.string}, offset by: ${best.offset} pixels`);
 console.log(`\nRest: ${rest.map(res => res.string).join(', ')}`);
