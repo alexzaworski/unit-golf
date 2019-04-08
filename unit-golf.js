@@ -18,7 +18,7 @@ const conversions = [
 
 const findShortestValue = px => {
   return conversions
-    .map({ unit, value }) => {
+    .map(({ unit, value }) => {
       const inUnits = (px / value).toPrecision(precision);
       const string = `${Number(inUnits)}${unit}`;
       const offset = Math.abs(inUnits * value - px);
