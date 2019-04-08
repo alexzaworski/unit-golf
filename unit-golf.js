@@ -55,11 +55,11 @@ const convertAndSort = px => {
   return units
     .map(findBestUnitValue(px))
     .sort((a, b) => {
-      const lnDiff = a.string.length - b.string.length;
+      const [lnA, lnB] = [a, b].map(item => item.string.length);
       const [offsetA, offsetB] = [a.pixelOffset, b.pixelOffset].map(Math.abs);
-      if (offsetA >= allowedPixelOffset || lnDiff > 0) return 1;
-      if (lnDiff < 0) return -1;
-      return offsetA - offsetB;
+      const lnDiff = lnA - lnB;
+      if (lnDiff === 0) return offsetA - offsetB;
+      return lnDiff;
     });
 };
 
