@@ -1,6 +1,5 @@
 const px = process.argv[2];
-
-const allowedOffset = 1;
+const allowedOffset = process.argv[3] || .2;
 
 const conversions = [
   { unit: "px", value: 1 },
