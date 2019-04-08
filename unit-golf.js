@@ -1,6 +1,6 @@
 const px = Number(process.argv[2]);
 const allowedPixelOffset = Number(process.argv[3] || .5);
-const resultPrecision = Number(process.argv[3] || 2);
+const resultPrecision = Number(process.argv[4] || 2);
 
 const units = [
   { name: "px", multiplier: 1 },
