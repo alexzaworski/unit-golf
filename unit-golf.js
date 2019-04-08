@@ -1,5 +1,4 @@
 const px = process.argv[2];
-const precision = process.argv[3] || 2;
 
 const allowedOffset = 1;
 
@@ -19,8 +18,8 @@ const conversions = [
 const findShortestValue = px => {
   return conversions
     .map(({ unit, value }) => {
-      const inUnits = (px / value).toPrecision(precision);
-      const string = `${Number(inUnits)}${unit}`;
+      const inUnits = (px / value).toPrecision(2);
+      const string = `${Number(inUnits)}${unit}`.replace(/^0./, '.');
       const offset = Math.abs(inUnits * value - px);
       return { string, offset };
     })
