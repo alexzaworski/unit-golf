@@ -1,5 +1,5 @@
 const px = process.argv[2];
-const precision = process.argv[3] || 3;
+const precision = process.argv[3] || 2;
 
 const allowedOffset = 1;
 
