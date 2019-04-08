@@ -33,4 +33,4 @@ const convertAndSort = px => {
 const [best, ...rest] = convertAndSort(px);
 
 console.log(`\nBest: ${best.string}, offset by: ${best.offset} pixels`);
-console.log(`\nRest: ${rest.map(res => res.string).join(', ')}`);
+console.log(`\nRest:\n${rest.map(res => `${res.string} (offset: ${Number(res.offset.toPrecision(2))})`).join('\n')}`);
