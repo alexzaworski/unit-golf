@@ -41,11 +41,11 @@ const findBestUnitValue = px => unit => {
       newUnitValue = clampPrecision(unitValue, i);
       const newResult = getUnitValues(px, unit, newUnitValue);
       pixelOffset = newResult.pixelOffset;
-      if (pixelOffset <= allowedPixelOffset) {
+      if (Math.abs(pixelOffset) <= allowedPixelOffset) {
         result = newResult;
       }
       i--;
-    } while(i >= 0);
+    } while (i >= 0);
   }
 
   return result;
@@ -58,6 +58,7 @@ const convertAndSort = px => {
       const [lnA, lnB] = [a, b].map(item => item.string.length);
       const [offsetA, offsetB] = [a.pixelOffset, b.pixelOffset].map(Math.abs);
       const lnDiff = lnA - lnB;
+      if (offsetA > allowedPixelOffset) return 1;
       if (lnDiff === 0) return offsetA - offsetB;
       return lnDiff;
     });
