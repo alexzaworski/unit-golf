@@ -1,36 +1,69 @@
-const px = process.argv[2];
-const allowedOffset = process.argv[3] || .2;
+const px = Number(process.argv[2]);
+const allowedPixelOffset = Number(process.argv[3] || .5);
+const resultPrecision = Number(process.argv[3] || 2);
 
-const conversions = [
-  { unit: "px", value: 1 },
-  { unit: "cm", value: 37.78125 },
-  { unit: "mm", value: 3.765625 },
-  { unit: "in", value: 96 },
-  { unit: "pt", value: 1.328125 },
-  { unit: "em", value: 16 },
-  { unit: "ex", value: 7.171875 },
-  { unit: "vw", value: 4 },
-  { unit: "vh", value: 3 },
-  { unit: "q",  value: 0.94453125 }
+const units = [
+  { name: "px", multiplier: 1 },
+  { name: "cm", multiplier: 37.78125 },
+  { name: "mm", multiplier: 3.765625 },
+  { name: "in", multiplier: 96 },
+  { name: "pt", multiplier: 1.328125 },
+  { name: "em", multiplier: 16 },
+  { name: "ex", multiplier: 7.171875 },
+  { name: "vw", multiplier: 4 },
+  { name: "vh", multiplier: 3 },
+  { name: "q",  multiplier: 0.94453125 }
 ];
 
+const clampPrecision = (number, precision = 2) => {
+  const pow = Math.pow(10, precision);
+  return Number(Math.round(number * pow) / pow);
+};
+
+const getUnitValues = (px, unit, unitValue) => {
+  const { name, multiplier } = unit;
+  unitValue = unitValue || clampPrecision(px / multiplier, resultPrecision);
+  const pixelOffset = clampPrecision(unitValue * multiplier - px);
+  return {
+    unitValue,
+    string: `${unitValue}${name}`.replace(/^0./, '.'),
+    pixelOffset,
+  };
+};
+
+const findBestUnitValue = px => unit => {
+  let result = getUnitValues(px, unit);
+  const { unitValue } = result;
+
+  if (!Number.isInteger(unitValue)) {
+    let pixelOffset, newUnitValue, i = unitValue.toString().split('.')[1].length-1;
+    do {
+      newUnitValue = clampPrecision(unitValue, i);
+      const newResult = getUnitValues(px, unit, newUnitValue);
+      pixelOffset = newResult.pixelOffset;
+      if (pixelOffset <= allowedPixelOffset) {
+        result = newResult;
+      }
+      i--;
+    } while(i >= 0);
+  }
+
+  return result;
+};
+
 const convertAndSort = px => {
-  return conversions
-    .map(({ unit, value }) => {
-      const inUnits = (px / value).toPrecision(2);
-      const string = `${Number(inUnits)}${unit}`.replace(/^0./, '.');
-      const offset = Math.abs(inUnits * value - px);
-      return { string, offset };
-    })
+  return units
+    .map(findBestUnitValue(px))
     .sort((a, b) => {
       const lnDiff = a.string.length - b.string.length;
-      if (a.offset >= allowedOffset || lnDiff > 0) return 1;
+      const [offsetA, offsetB] = [a.pixelOffset, b.pixelOffset].map(Math.abs);
+      if (offsetA >= allowedPixelOffset || lnDiff > 0) return 1;
       if (lnDiff < 0) return -1;
-      return a.offset - b.offset;
-    })
+      return offsetA - offsetB;
+    });
 };
 
 const [best, ...rest] = convertAndSort(px);
 
-console.log(`\nBest: ${best.string}, offset by: ${best.offset} pixels`);
-console.log(`\nRest:\n${rest.map(res => `${res.string} (offset: ${Number(res.offset.toPrecision(2))})`).join('\n')}`);
+console.log(`\nBest: ${best.string}, offset by: ${best.pixelOffset} pixels`);
+console.log(`\nRest:\n${rest.map(res => `${res.string} (offset: ${res.pixelOffset})`).join('\n')}`);
