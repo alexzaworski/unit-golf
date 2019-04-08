@@ -28,9 +28,9 @@ const findShortestValue = px => {
       if (lnDiff < 0) return -1;
       return a.offset - b.offset;
     })
-    .map(res => res.string)
 };
 
 const [best, ...rest] = findShortestValue(px);
 
-console.log(`Best match: ${best}, rest: ${rest}`);
+console.log(`\nBest: ${best.string}, offset by: ${best.offset} pixels`);
+console.log(`\nRest: ${rest.map(res => res.string).join(', ')}`);
