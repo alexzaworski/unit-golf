@@ -24,7 +24,7 @@ Rest:
 you can adjust the allowed pixel offset (default 0.5) and the precision of results (default 2)
 
 ```
-node unit-golf 325 2
+node unit-golf 325 0 3
 
 Best: 325px, offset by: 0 pixels
 
