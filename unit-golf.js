@@ -1,4 +1,4 @@
-const px = Number(process.argv[2]);
+const px = process.argv[2];
 const allowedPixelOffset = Number(process.argv[3] || 0.5);
 const resultPrecision = Number(process.argv[4] || 2);
 
@@ -60,7 +60,18 @@ const convertAndSort = px => {
   });
 };
 
-const [best, ...rest] = convertAndSort(px);
+const getPixelValue = string => {
+   const numericValue = parseFloat(string);
+   if (numericValue.toString().length === string.length) return numericValue;
+   const name = string.replace(numericValue.toString(), '').toLowerCase();
+   const unit = units.find(unit => unit.name === name);
+   if (!unit) throw new Error(`Could not find such a unit: ${name}`);
+   const px = Math.round(unit.multiplier * numericValue);
+   console.log(`\nConverted to: ${px}px`);
+   return px;
+}
+
+const [best, ...rest] = convertAndSort(getPixelValue(px));
 
 console.log(`\nBest: ${best.string}, offset by: ${best.pixelOffset} pixels`);
 console.log(
