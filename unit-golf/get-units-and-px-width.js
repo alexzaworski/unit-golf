@@ -1,6 +1,19 @@
 const puppeteer = require("puppeteer");
 
-const UNITS = ["px", "vw", "vh", "in", "cm", "mm", "pt", "pc", "em", "ex", "q"];
+const UNITS = [
+  "px",
+  "vw",
+  "vh",
+  "in",
+  "cm",
+  "mm",
+  "pt",
+  "pc",
+  "em",
+  "ex",
+  "q",
+  "ch"
+];
 
 const measureUnits = (value, units) => {
   const el = document.createElement("div");
