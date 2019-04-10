@@ -40,10 +40,10 @@ const measureUnits = (value, units) => {
   };
 };
 
-const getUnits = async input => {
+const getUnits = async ({ input, width, height }) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.setViewport({ width: 400, height: 300 });
+  await page.setViewport({ width, height });
   const units = await page.evaluate(measureUnits, input, UNITS);
   await browser.close();
   return units;
