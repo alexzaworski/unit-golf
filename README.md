@@ -6,7 +6,7 @@ Helps shorten units for cssbattle.dev
 
 ## Usage
 
-`> unit-golf [VALUE_TO_CONVERT]`
+`$ unit-golf [VALUE_TO_CONVERT]`
 
 Where `VALUE_TO_CONVERT` is any whole or fractional number of the following units:
 
@@ -31,7 +31,7 @@ Viewport height for the purpose of calculating vh units. Defaults to `300`, whic
 ### Examples
 
 ```
-> unit-golf 57.3vw
+$ unit-golf 57.3vw
 
 ⛳  32ex (-0.19px)
 
@@ -49,7 +49,7 @@ Viewport height for the purpose of calculating vh units. Defaults to `300`, whic
 ```
 
 ```
-> unit-golf 57.3vw --tolerance 0
+$ unit-golf 57.3vw --tolerance 0
 
 ⛳  242.57q
 
