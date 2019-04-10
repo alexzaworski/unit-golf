@@ -15,13 +15,16 @@ const measureUnits = (value, units) => {
 
   const initialWidth = measureEl(value);
 
-  return units.map(unit => {
-    const measured = measureEl(`${initialWidth}${unit}`);
-    return {
-      name: unit,
-      multiplier: measured / initialWidth
-    };
-  }, []);
+  return {
+    pxWidth: initialWidth,
+    units: units.map(unit => {
+      const measured = measureEl(`${initialWidth}${unit}`);
+      return {
+        name: unit,
+        multiplier: measured / initialWidth
+      };
+    }, [])
+  };
 };
 
 const getUnits = async input => {

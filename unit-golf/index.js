@@ -1,4 +1,4 @@
-const getUnits = require("./get-units");
+const getUnitsAndPxWidth = require("./get-units-and-px-width");
 
 const input = process.argv[2];
 const allowedPixelOffset = Number(process.argv[3] || 0.5);
@@ -49,20 +49,8 @@ const convertAndSort = (px, units) => {
   });
 };
 
-const getPixelValue = (string, units) => {
-  const numericValue = parseFloat(string);
-  if (numericValue.toString().length === string.length) return numericValue;
-  const name = string.replace(numericValue.toString(), "").toLowerCase();
-  const unit = units.find(unit => unit.name === name);
-  if (!unit) throw new Error(`Could not find such a unit: ${name}`);
-  const px = Math.round(unit.multiplier * numericValue);
-  console.log(`\nConverted to: ${px}px`);
-  return px;
-};
-
-getUnits(input).then(units => {
-  const asPx = getPixelValue(input, units);
-  const [best, ...rest] = convertAndSort(asPx, units);
+getUnitsAndPxWidth(input).then(({ units, pxWidth }) => {
+  const [best, ...rest] = convertAndSort(pxWidth, units);
   console.log(`\nBest: ${best.string}, offset by: ${best.pixelOffset} pixels`);
   console.log(
     `\nRest:\n${rest
