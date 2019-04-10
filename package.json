@@ -17,7 +17,7 @@
   "description": "helps shorten pixel units for cssbattle.dev",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alexzaworski/unit-golfer.git"
+    "url": "git+https://github.com/alexzaworski/unit-golf.git"
   },
   "engines": {
     "node": ">=8"
@@ -29,7 +29,7 @@
   ],
   "author": "Alex Zaworski (https://zawor.ski)",
   "bugs": {
-    "url": "https://github.com/alexzaworski/unit-golfer/issues"
+    "url": "https://github.com/alexzaworski/unit-golf/issues"
   },
-  "homepage": "https://github.com/alexzaworski/unit-golfer"
+  "homepage": "https://github.com/alexzaworski/unit-golf"
 }
