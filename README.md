@@ -1,41 +1,57 @@
-helps shorten pixel units for cssbattle.dev
+Helps shorten units for cssbattle.dev
 
-# usage
+# Usage
 
-`node unit-golf [pixels] [allowedPixelOffset] [resultPrecision]`
+`> unit-golf [VALUE_TO_CONVERT]`
+
+Where `VALUE_TO_CONVERT` is any whole or fractional number of the following units:
+
+`px, vw, vh, in, cm, mm, pt, pc, em, ex, q, ch`
+
+If the unit is ommitted (eg, `unit-golf 325`) it will default to pixels.
+
+## Options
+
+### `--tolerance`
+
+Maximum difference in pixels that will be considered a match for a value. Defaults to `0.5`. Decreasing will yield more exact but less concise results and vice versa.
+
+### `--width`
+
+Viewport width for the purpose of calculating vw units. Defaults to `400`, which is what cssbattle currently uses.
+
+### `--height`
+
+Viewport height for the purpose of calculating vh units. Defaults to `300`, which is what cssbattle currently uses.
+
+## Examples
 
 ```
-node unit-golf 325
+> unit-golf 57.3vw
 
-Best: 86mm, offset by: -0.08 pixels
+⛳  32ex (-0.19px)
 
-Rest:
-344q (offset: -0.08)
-325px (offset: 0)
-8.6cm (offset: -0.08)
-245pt (offset: 0.39)
-45.3ex (offset: -0.11)
-20.3em (offset: -0.2)
-81.3vw (offset: 0.2)
-3.39in (offset: 0.44)
-108.3vh (offset: -0.1)
+172pt (+0.14px)
+229px (-0.19px)
+57.3vw (+0.01px)
+76.4vh (+0.01px)
+242.6q (+0.03px)
+6.06cm (-0.15px)
+60.6mm (-0.15px)
+28.65ch (+0.01px)
+14.32pc (-0.07px)
+14.32em (-0.07px)
+2.39in (+0.25px)
 ```
 
-you can adjust the allowed pixel offset (default 0.5) and the precision of results (default 2)
-
 ```
-node unit-golf 325 0 3
+> unit-golf 57.3vw --tolerance 0
 
-Best: 325px, offset by: 0 pixels
+⛳  242.57q
 
-Rest:
-81.25vw (offset: 0)
-8.602cm (offset: -0.01)
-3.385in (offset: -0.04)
-86.022mm (offset: 0)
-45.316ex (offset: 0)
-344.086q (offset: 0)
-20.313em (offset: 0.01)
-244.706pt (offset: 0)
-108.333vh (offset: 0)
+60.64mm
+171.89pt
+...
 ```
+
+Parens indicate how many pixels off each suggestion is from the target.

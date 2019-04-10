@@ -1,5 +1,35 @@
 {
+  "name": "unit-golf",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "src/index.js",
+  "bin": {
+    "unit-golf": "src/cli.js"
+  },
+  "scripts": {},
+  "devDependencies": {},
   "dependencies": {
+    "chalk": "^2.4.2",
+    "minimist": "^1.2.0",
+    "ora": "^3.4.0",
     "puppeteer": "^1.14.0"
-  }
+  },
+  "description": "helps shorten pixel units for cssbattle.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexzaworski/unit-golfer.git"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "keywords": [
+    "css",
+    "golf",
+    "unit"
+  ],
+  "author": "Alex Zaworski (https://zawor.ski)",
+  "bugs": {
+    "url": "https://github.com/alexzaworski/unit-golfer/issues"
+  },
+  "homepage": "https://github.com/alexzaworski/unit-golfer"
 }
