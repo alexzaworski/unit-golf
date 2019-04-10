@@ -38,30 +38,31 @@ const findBestUnitValue = px => unit => {
   return result;
 };
 
+const convertAndSort = (px, units) => {
+  return units.map(findBestUnitValue(px)).sort((a, b) => {
+    const [lnA, lnB] = [a, b].map(item => item.string.length);
+    const [offsetA, offsetB] = [a.pixelOffset, b.pixelOffset].map(Math.abs);
+    const lnDiff = lnA - lnB;
+    if (offsetA > allowedPixelOffset) return 1;
+    if (lnDiff === 0) return offsetA - offsetB;
+    return lnDiff;
+  });
+};
+
+const getPixelValue = (string, units) => {
+  const numericValue = parseFloat(string);
+  if (numericValue.toString().length === string.length) return numericValue;
+  const name = string.replace(numericValue.toString(), "").toLowerCase();
+  const unit = units.find(unit => unit.name === name);
+  if (!unit) throw new Error(`Could not find such a unit: ${name}`);
+  const px = Math.round(unit.multiplier * numericValue);
+  console.log(`\nConverted to: ${px}px`);
+  return px;
+};
+
 getUnits(input).then(units => {
-  const convertAndSort = px => {
-    return units.map(findBestUnitValue(px)).sort((a, b) => {
-      const [lnA, lnB] = [a, b].map(item => item.string.length);
-      const [offsetA, offsetB] = [a.pixelOffset, b.pixelOffset].map(Math.abs);
-      const lnDiff = lnA - lnB;
-      if (offsetA > allowedPixelOffset) return 1;
-      if (lnDiff === 0) return offsetA - offsetB;
-      return lnDiff;
-    });
-  };
-
-  const getPixelValue = string => {
-    const numericValue = parseFloat(string);
-    if (numericValue.toString().length === string.length) return numericValue;
-    const name = string.replace(numericValue.toString(), "").toLowerCase();
-    const unit = units.find(unit => unit.name === name);
-    if (!unit) throw new Error(`Could not find such a unit: ${name}`);
-    const px = Math.round(unit.multiplier * numericValue);
-    console.log(`\nConverted to: ${px}px`);
-    return px;
-  };
-
-  const [best, ...rest] = convertAndSort(getPixelValue(input));
+  const asPx = getPixelValue(input, units);
+  const [best, ...rest] = convertAndSort(asPx, units);
   console.log(`\nBest: ${best.string}, offset by: ${best.pixelOffset} pixels`);
   console.log(
     `\nRest:\n${rest
