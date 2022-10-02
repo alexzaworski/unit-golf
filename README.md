@@ -1,8 +1,14 @@
-Helps shorten units for cssbattle.dev
+# Unit golf
+
+Helps shorten units for [cssbattle.dev](https://cssbattle.dev)
 
 ## Installation
 
-`yarn global add unit-golf` || `npm install --global unit-golf`
+Yarn:  
+`yarn global add unit-golf`
+
+NPM:  
+`npm install --global unit-golf`
 
 ## Usage
 
@@ -10,9 +16,9 @@ Helps shorten units for cssbattle.dev
 
 Where `VALUE_TO_CONVERT` is any whole or fractional number of the following units:
 
-`px, vw, vh, in, cm, mm, pt, pc, em, ex, q, ch`
+`px`, `vw`, `vh`, `in`, `cm`, `mm`, `pt`, `pc`, `em`, `ex`, `q`, `ch`
 
-If the unit is ommitted (eg, `unit-golf 325`) it will default to pixels.
+If the unit is omitted (eg, `unit-golf 325`) it will default to pixels.
 
 ### Options
 
@@ -22,11 +28,11 @@ Maximum difference in pixels that will be considered a match for a value. Defaul
 
 #### `--width`
 
-Viewport width for the purpose of calculating vw units. Defaults to `400`, which is what cssbattle currently uses.
+Viewport width for the purpose of calculating vw units. Defaults to `400`, which is what CSSBattle currently uses.
 
 #### `--height`
 
-Viewport height for the purpose of calculating vh units. Defaults to `300`, which is what cssbattle currently uses.
+Viewport height for the purpose of calculating vh units. Defaults to `300`, which is what CSSBattle currently uses.
 
 ### Examples
 
